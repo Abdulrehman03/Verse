@@ -1,72 +1,151 @@
 import * as React from "react";
-import { makeStyles, createStyles, useTheme } from "@mui/styles";
-import AsyncSelect from "react-select/async";
-import { Typography } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+import Select, { components } from "react-select";
+import SearchIcon from "@mui/icons-material/Search";
+import HomeIcon from "@mui/icons-material/Home";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
   createStyles({
-    redText: {
-      color: "red",
-      marginTop: "5px",
+    searchContainer: {
+      "& #react-select-3-placeholder": {
+        fontFamily:
+          "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+        fontSize: "14px !important",
+        color: theme.palette.primary.heading,
+      },
+      "& #react-select-3-input": {
+        fontFamily:
+          "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+        fontSize: "14px !important",
+        color: "#fff9f9 !important",
+      },
+      "& .css-1ko62if-control": {
+        backgroundColor: "transparent !important",
+        border: `1px solid ${theme.palette.primary.heading}`,
+        color: theme.palette.primary.heading,
+      },
+      "& .css-1w77nty-control": {
+        color: theme.palette.primary.heading,
+        backgroundColor: "transparent !important",
+        border: `1px solid ${theme.palette.primary.heading}`,
+      },
+    },
+    homeIcon: {
+      color: "white",
+      backgroundColor: "#ff6018",
+      borderRadius: "5px",
+      fontSize: "30px !important",
+      margin: theme.spacing(0.5),
+    },
+    optionWrapper: {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      padding: theme.spacing(1),
+      cursor: "pointer",
+    },
+    nameWrapper: {
+      marginLeft: theme.spacing(1),
+    },
+    name: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      fontSize: "14px",
+      fontWeight: "bolder",
+    },
+    position: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      fontSize: "14px",
+      color: theme.palette.primary.subHeading,
+      fontWeight: "bold",
     },
   })
 );
 
-const Select = (props) => {
-  const defaultTheme = useTheme();
+const Search = (props) => {
   const classes = useStyles();
+  const { data } = props;
 
-  // commented for future use
-  // eslint-disable-next-line no-unused-vars
-  const handleChange = (newValue, actionMeta) => {
-    props.setValue(newValue);
+  const indicatorSeparatorStyle = {
+    alignSelf: "stretch",
+    backgroundColor: "transparent",
+    marginBottom: 8,
+    marginTop: 8,
+    width: 1,
   };
-  // // commented for future use
-  // const handleInputChange = (newValue: any, actionMeta: any) => {
 
-  // };
-  const filterArr = (inputValue) => {
-    return props.options.filter((i) =>
-      i.label.toString().toLowerCase().includes(inputValue.toLowerCase())
+  const IndicatorSeparator = ({ innerProps }) => {
+    return <span style={indicatorSeparatorStyle} {...innerProps} />;
+  };
+
+  const DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <SearchIcon fontSize="large" />
+      </components.DropdownIndicator>
     );
   };
 
-  const promiseOptions = (inputValue, callback) => {
-    setTimeout(() => {
-      callback(filterArr(inputValue));
-    }, 1000);
+  //You can customize this part as design
+  const Option = (props) => {
+    const { label, value } = props;
+    console.log(props);
+    return (
+      <div className={classes.optionWrapper}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "centers",
+          }}
+        >
+          <HomeIcon className={classes.homeIcon} />
+        </div>
+        <div className={classes.nameWrapper}>
+          <div className={classes.name}>{label}</div>
+          <div>
+            <span className={classes.position}>Position</span>{" "}
+            <span className={classes.position}>&bull;</span> &nbsp;
+            <span className={classes.position}>{value}</span>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div>
-      <AsyncSelect
-        defaultOptions={props.options}
-        id={props.id}
-        value={props.value}
-        isMulti={props.multiple}
-        isLoading={props.loading}
-        loadOptions={promiseOptions}
-        placeholder={props.placeholder}
-        name={props.name}
-        isDisabled={props.disabled}
-        onChange={handleChange}
+    <div className={classes.searchContainer}>
+      <Select
+        {...props}
+        closeMenuOnSelect={false}
+        components={{
+          Option,
+          DropdownIndicator,
+          IndicatorSeparator,
+        }}
+        styles={{
+          option: (base) => ({
+            ...base,
+            border: `1px dotted red`,
+            height: "100%",
+          }),
+        }}
         theme={(theme) => ({
           ...theme,
-          borderRadius: 10,
+          borderRadius: 5,
           colors: {
             ...theme.colors,
-            primary25: defaultTheme.palette.gray[100],
-            primary: defaultTheme.palette.gray[600],
+            primary25: "white",
+            primary: "white",
           },
         })}
+        placeholder="Search an estate or parcel"
+        // defaultValue={data[0]}
+        options={data}
       />
-      {props.error ? (
-        <Typography variant="body2" className={classes.redText}>
-          &nbsp;&nbsp;{props.helperText}
-        </Typography>
-      ) : null}
     </div>
   );
 };
 
-export default Select;
+export default Search;
