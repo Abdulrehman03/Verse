@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) =>
 
 const Search = (props) => {
   const classes = useStyles();
-  const { data } = props;
+  const { data, onClick } = props;
 
   const indicatorSeparatorStyle = {
     alignSelf: "stretch",
@@ -92,7 +92,7 @@ const Search = (props) => {
     const { label, value } = props;
     console.log(props);
     return (
-      <div className={classes.optionWrapper}>
+      <div className={classes.optionWrapper} onClick={onClick}>
         <div
           style={{
             display: "flex",

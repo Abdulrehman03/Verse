@@ -1,7 +1,9 @@
 import * as React from "react";
 import { createStyles, makeStyles } from "@mui/styles";
 import Layout from "../Components/Layout/Layout";
-import MainPage from "../Components/Landing";
+import MainPage from "../Components/Landing/MainPage";
+import DetailsPage from "../Components/Landing/DetailsPage";
+import { ShowDetailContext } from "../Context/ShowDetail";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -16,11 +18,12 @@ const useStyles = makeStyles(() =>
 
 const Landing = () => {
   const classes = useStyles();
+  const { showDetails } = React.useContext(ShowDetailContext);
 
   return (
     <Layout>
       <div className={classes.root}>
-        <MainPage />
+        {showDetails === true ? <DetailsPage /> : <MainPage />}
       </div>
     </Layout>
   );

@@ -2,14 +2,14 @@ import * as React from "react";
 import { createStyles, makeStyles } from "@mui/styles";
 import { Grid, Typography, Container } from "@mui/material";
 import Image from "../../Assets/landingPage.png";
-import Search from "../../Components/Search/Select";
+import Search from "../Search/Select";
+import { ShowDetailContext } from "../../Context/ShowDetail";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       display: "flex",
       alignItems: "center",
-      height: "75vh",
       width: "100%",
     },
     logoDiv: {
@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) =>
     },
     logo: {
       height: "450px",
+      [theme.breakpoints.down("md")]: {
+        height: "450px",
+      },
       [theme.breakpoints.down("sm")]: {
         height: "250px",
-      },
-      [theme.breakpoints.down("md")]: {
-        height: "350px",
       },
     },
     mainHeading: {
@@ -80,10 +80,21 @@ const useStyles = makeStyles((theme) =>
 const data = [
   { label: "Snoop Dogg's Crib", value: "01-131" },
   { label: "Samsung Center", value: "02-231" },
+  { label: "Jenifer Crib", value: "01-131" },
+  { label: "Oppo Center", value: "02-231" },
+  { label: "Alba Flores Crib", value: "01-131" },
+  { label: "Ahmad Center", value: "02-231" },
+  { label: "John Doe", value: "01-131" },
+  { label: "Apple Center", value: "02-231" },
 ];
 
 const MainPage = () => {
   const classes = useStyles();
+  const { setShowDetails } = React.useContext(ShowDetailContext);
+
+  const onClick = () => {
+    setShowDetails(true);
+  };
 
   return (
     <Container>
@@ -106,7 +117,7 @@ const MainPage = () => {
             <Typography className={classes.subHeading}>
               Search for a Decentraland location
             </Typography>
-            <Search data={data} />
+            <Search data={data} onClick={onClick} />
           </div>
         </Grid>
       </Grid>
