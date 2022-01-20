@@ -1,6 +1,13 @@
 body {
   background-color: #16325c;
 }
+
+@media only screen and (max-width: 768px) {
+  body {
+    padding-top: 10%;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 10px !important;
   height: 5px !important;
