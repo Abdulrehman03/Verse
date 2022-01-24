@@ -119,6 +119,7 @@ const MainPage = () => {
               <Typography className={classes.subHeading}>
                 Search for a Decentraland location
               </Typography>
+              <br />
               <Search data={data} onClick={onClick} />
             </div>
           </Grid>

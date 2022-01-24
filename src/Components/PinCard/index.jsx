@@ -6,7 +6,6 @@ import { Typography, Grid } from "@mui/material";
 const useStyles = makeStyles((theme) =>
   createStyles({
     analyticsWrapperTop: {
-      maxHeight: "650px",
       overflowY: "auto",
       background: theme.palette.primary.lightGray2,
       borderRadius: "10px",
@@ -42,11 +41,15 @@ const PinCard = ({
   subHeading2,
   children,
   totalHeading,
+  maxHeight,
 }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.analyticsWrapperTop}>
+    <div
+      style={{ maxHeight: `${maxHeight}` }}
+      className={classes.analyticsWrapperTop}
+    >
       <div className={classes.cardTitleWrapper}>
         <span>
           <img src={pinImage} height="30px" alt="pin" />

@@ -8,7 +8,7 @@ const theme = createTheme({
       heading: "#fff9f9",
       subHeading: "#706e6b",
       lightGray: "#bbbbbb",
-      lightGray2: " #dddbda",
+      lightGray2: "#dddbda",
       blue: "#0070d2",
     },
     secondary: {

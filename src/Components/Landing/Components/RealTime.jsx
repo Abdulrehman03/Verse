@@ -11,6 +11,8 @@ import { VictoryPie } from "victory";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import PlayerModal from "./PlayerModal";
+import { ShowDetailContext } from "../../../Context/ShowDetail";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -31,6 +33,35 @@ const useStyles = makeStyles((theme) =>
       fontSize: "16px !important",
       [theme.breakpoints.down("sm")]: {
         fontSize: "12px !important",
+      },
+    },
+    playerHeading: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      color: theme.palette.primary.subHeading,
+      fontSize: "14px !important",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "12px !important",
+      },
+    },
+    playerPriceHeading: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      color: theme.palette.primary.subHeading,
+      fontSize: "16px !important",
+      textAlign: "center !important",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "12px !important",
+      },
+    },
+    visitorDialogHeading: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      color: theme.palette.primary.heading,
+      fontSize: "40px !important",
+      marginLeft: "15px !important",
+      [theme.breakpoints.down("md")]: {
+        fontSize: "16px !important",
       },
     },
     chartDetail: {
@@ -82,12 +113,107 @@ const useStyles = makeStyles((theme) =>
       justifyContent: "center",
       alignItems: "center",
     },
+    flexStart: {
+      display: "flex",
+      justifyContent: "start",
+      alignItems: "center",
+    },
     visitors: {
       display: "flex",
       justifyContent: "space-between",
       padding: theme.spacing(0, 5, 0, 0),
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("xs")]: {
         padding: theme.spacing(0.5, 0),
+        textAlign: "center",
+      },
+    },
+    players: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: theme.spacing(0),
+      [theme.breakpoints.down("xs")]: {
+        padding: theme.spacing(0.5, 0),
+        textAlign: "center",
+      },
+    },
+    personList: {
+      display: "flex",
+      margin: "15px 0",
+      cursor: "pointer",
+    },
+    closeButtonDiv: {
+      position: "absolute",
+      cursor: "pointer",
+      top: "60px",
+      right: "50px",
+      [theme.breakpoints.down("sm")]: {
+        top: "10px",
+        right: "15px",
+      },
+      [theme.breakpoints.down("xs")]: {
+        top: "10px",
+        right: "15px",
+      },
+    },
+    backdrop: {
+      backgroundColor: "transparent !important",
+    },
+    paper: {
+      width: "60% !important",
+      backgroundColor: "#797979 !important",
+      borderRadius: "20px !important",
+      border: "3px solid #dddbda",
+      padding: theme.spacing(5, 3),
+      [theme.breakpoints.down("sm")]: {
+        padding: theme.spacing(0),
+        width: "100% !important",
+      },
+    },
+    closeIcon: {
+      color: theme.palette.primary.lightGray2,
+    },
+    backIcon: {
+      margin: "12px 10px 0 0",
+      color: theme.palette.primary.lightGray2,
+      backgroundColor: "#0dc2d9",
+      borderRadius: "25px",
+      cursor: "pointer",
+    },
+    visitorDialogProgress: {
+      marginLeft: "15px !important",
+    },
+    manaSection: {
+      padding: theme.spacing(2),
+    },
+    manaTransactions: {
+      marginTop: "0px",
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      color: theme.palette.primary.subHeading,
+      fontSize: "20px !important",
+      textAlign: "center !important",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "12px !important",
+      },
+    },
+    button: {
+      background: "#1e98d7 !important",
+      padding: "10px 3rem !important",
+      fontSize: "14px !important",
+      [theme.breakpoints.down("md")]: {
+        textAlign: "center",
+        padding: "10px !important",
+        fontSize: "10px !important",
+      },
+    },
+    actionButton: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      color: theme.palette.primary.heading,
+      fontSize: "14px !important",
+      marginTop: "4px !important",
+      textTransform: "capitalize",
+      [theme.breakpoints.down("md")]: {
         textAlign: "center",
       },
     },
@@ -96,6 +222,17 @@ const useStyles = makeStyles((theme) =>
 
 const RealTime = () => {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const { setVisitorData } = React.useContext(ShowDetailContext);
+
+  const handleClickOpen = (visitor) => {
+    setOpen(true);
+    setVisitorData(visitor);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const dataR = [
     { name: "$0", value: 100 },
@@ -209,13 +346,15 @@ const RealTime = () => {
           <PinCard
             heading="Visitor"
             subHeading="All visitors, their wallet values and wearables."
+            maxHeight={"650px"}
           >
-            {visitors.map((person, i) => {
+            {visitors.map((visitor, i) => {
               return (
                 <Grid
+                  className={classes.personList}
                   key={i}
                   container
-                  style={{ display: "flex", margin: "15px 0" }}
+                  onClick={() => handleClickOpen(visitor)}
                 >
                   <Grid item xs={1}>
                     <img src={personImage} alt="person" height="30px" />
@@ -228,24 +367,24 @@ const RealTime = () => {
                     >
                       <Grid item xs={4}>
                         <Typography className={classes.visitorHeading}>
-                          {person.name}
+                          {visitor.name}
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
                         <Typography className={classes.visitorHeading}>
-                          USD {person.price}
+                          USD {visitor.price}
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
                         <Typography className={classes.visitorHeading}>
-                          {person.wearables} Paid Wearables
+                          {visitor.wearables} Paid Wearables
                         </Typography>
                       </Grid>
                     </Grid>
                     <div>
                       <BorderLinearProgress
                         variant="determinate"
-                        value={person.progress}
+                        value={visitor.progress}
                       />
                     </div>
                   </Grid>
@@ -322,8 +461,8 @@ const RealTime = () => {
                       innerRadius={({ datum }) => (datum.y = 80)}
                       labels={[]}
                       data={[
-                        { x: 1, y: 2 },
-                        { x: 2, y: 3 },
+                        { x: "female", y: 2 },
+                        { x: "male", y: 3 },
                       ]}
                     />
                   </div>
@@ -333,6 +472,11 @@ const RealTime = () => {
           </Grid>
         </Grid>
       </Grid>
+      <PlayerModal
+        open={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+      />
     </div>
   );
 };
