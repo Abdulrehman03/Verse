@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     logo: {
       height: "64px",
+      paddingLeft: theme.spacing(2.5),
       [theme.breakpoints.down("md")]: {
         height: "40px",
       },
@@ -33,9 +34,10 @@ const useStyles = makeStyles((theme) =>
       },
     },
     linksDiv: {
-      paddingLeft: theme.spacing(1),
+      padding: theme.spacing(0, 2.5),
       display: "flex",
       justifyContent: "center",
+      float: "right",
     },
     NavLink: {
       textDecoration: "none",

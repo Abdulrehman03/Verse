@@ -127,7 +127,6 @@ const Search = (props) => {
         styles={{
           option: (base) => ({
             ...base,
-            border: `1px dotted red`,
             height: "100%",
           }),
         }}

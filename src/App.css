@@ -35,4 +35,9 @@ body {
 #email::placeholder {
   color: #fff9f9;
   font-size: medium;
-} 
+}
+input,
+input::placeholder {
+  color: #fff9f9;
+  font-size: medium;
+}

@@ -13,10 +13,10 @@ const useStyles = makeStyles((theme) =>
       padding: theme.spacing(2),
     },
     analyticsWrapperCenter: {
-      background: theme.palette.primary.lightGray2,
-      borderRadius: "10px",
-      border: "1px solid #797979",
-      padding: theme.spacing(2),
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
     },
     cardTitleWrapper: {
       display: "flex",
@@ -42,12 +42,13 @@ const PinCard = ({
   children,
   totalHeading,
   maxHeight,
+  minHeight,
 }) => {
   const classes = useStyles();
 
   return (
     <div
-      style={{ maxHeight: `${maxHeight}` }}
+      style={{ maxHeight: `${maxHeight}`, minHeight: `${minHeight}` }}
       className={classes.analyticsWrapperTop}
     >
       <div className={classes.cardTitleWrapper}>

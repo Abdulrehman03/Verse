@@ -10,17 +10,17 @@ const useStyles = makeStyles((theme) =>
     wrapper: {
       zIndex: 0,
       maxWidth: "1280px",
-      padding: theme.spacing(0, 3),
+      padding: theme.spacing(0, 3, 8, 3),
       marginTop: "100px",
       margin: "auto",
       [theme.breakpoints.down("md")]: {
         height: "100% !important",
         margin: "auto auto 5% auto",
-        padding: theme.spacing(0, 3, 5, 3),
+        padding: theme.spacing(0, 3, 8, 3),
       },
       [theme.breakpoints.down("sm")]: {
         margin: "10% auto auto auto",
-        padding: theme.spacing(0, 3, 5, 3),
+        padding: theme.spacing(3, 3, 15, 3),
       },
     },
   })

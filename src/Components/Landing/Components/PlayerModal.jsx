@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) =>
       fontFamily:
         "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
       color: theme.palette.primary.subHeading,
-      fontSize: "14px !important",
+      fontSize: "16px !important",
       [theme.breakpoints.down("sm")]: {
         fontSize: "12px !important",
       },
@@ -163,11 +163,16 @@ const useStyles = makeStyles((theme) =>
         right: "15px",
       },
     },
+    modalContent: {
+      maxHeight: "500px",
+      overflowY: "auto",
+    },
     backdrop: {
       backgroundColor: "transparent !important",
     },
     paper: {
       width: "60% !important",
+      maxHeight: "85vh !important",
       backgroundColor: "#797979 !important",
       borderRadius: "20px !important",
       border: "3px solid #dddbda",
@@ -225,6 +230,9 @@ const useStyles = makeStyles((theme) =>
         textAlign: "center",
       },
     },
+    padding: {
+      padding: theme.spacing(2.5, 0),
+    },
   })
 );
 
@@ -253,7 +261,7 @@ const BorderLinearProgressBorder = styled(LinearProgress)(() => ({
   },
 }));
 
-const PlayerModal = ({ open, handleClickOpen, handleClose }) => {
+const PlayerModal = ({ open, handleClose }) => {
   const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -285,7 +293,7 @@ const PlayerModal = ({ open, handleClickOpen, handleClose }) => {
           className: classes.backdrop,
         }}
       >
-        <Container className={classes.modal}>
+        <Container>
           <div className={classes.closeButtonDiv}>
             <CloseIcon
               onClick={handleClose}
@@ -298,7 +306,10 @@ const PlayerModal = ({ open, handleClickOpen, handleClose }) => {
               <img src={personImage} alt="person" height="60px" />
             </Grid>
             <Grid item xs={6} sm={6} md={6} lg={9}>
-              <Typography className={classes.visitorDialogHeading}>
+              <Typography
+                noWrap={true}
+                className={classes.visitorDialogHeading}
+              >
                 {visitorData?.name}
               </Typography>
               <div className={classes.visitorDialogProgress}>
@@ -337,164 +348,191 @@ const PlayerModal = ({ open, handleClickOpen, handleClose }) => {
             </Grid>
           </Grid>
 
-          <Grid container justifyContent={"space-between"} spacing={1}>
-            <Grid item xs={12} sm={12} md={7}>
-              <PinCard
-                heading="Wearables"
-                subHeading="Wearables used by the players"
-                maxHeight={"370px"}
-              >
-                <div style={{ margin: "20px 0" }}>
-                  {visitorData?.players?.map((person, i) => {
-                    return (
-                      <Grid
-                        className={classes.personList}
-                        key={i}
-                        container
-                        justifyContent={"space-between"}
-                        onClick={handleClickOpen}
-                        spacing={4}
-                      >
-                        <Grid style={{ textAlign: "center" }} item xs={2}>
-                          <img src={coins} alt="person" height="30px" />
-                        </Grid>
-                        <Grid item xs={10}>
-                          <Grid
-                            container
-                            justifyContent="space-between"
-                            className={classes.visitors}
-                          >
-                            <Grid item xs={4}>
-                              <Typography className={classes.visitorHeading}>
-                                {person.name}
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Typography className={classes.visitorHeading}>
-                                USD {person.price}
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Typography className={classes.visitorHeading}>
-                                {person.art}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                          <div>
-                            <BorderLinearProgress
-                              variant="determinate"
-                              value={person.progress}
-                            />
-                          </div>
-                        </Grid>
-                      </Grid>
-                    );
-                  })}
-                </div>
-              </PinCard>
-              <br />
-              <PinCard
-                heading="Name"
-                subHeading="ENS Domains Purshased by thhis player"
-              >
-                <Grid
-                  style={{ marginTop: "5px" }}
-                  className={classes.personList}
-                  container
-                  justifyContent={"space-between"}
-                  onClick={handleClickOpen}
+          <div className={classes.modalContent}>
+            <Grid container justifyContent={"space-between"} spacing={1}>
+              <Grid item xs={12} sm={12} md={7}>
+                <PinCard
+                  heading="Wearables"
+                  subHeading="Wearables used by the players"
+                  maxHeight={"370px"}
                 >
-                  <Grid style={{ textAlign: "center" }} item xs={2}>
-                    <img src={coins} alt="person" height="30px" />
-                  </Grid>
-                  <Grid item xs={10}>
+                  <div style={{ margin: "20px 0" }}>
+                    {visitorData?.players?.map((person, i) => {
+                      return (
+                        <Grid className={classes.personList} key={i} container>
+                          <Grid style={{ marginRight: "10px" }} item xs={1}>
+                            <img src={coins} alt="person" height="30px" />
+                          </Grid>
+                          <Grid item xs={10}>
+                            <Grid
+                              container
+                              justifyContent="space-between"
+                              className={classes.visitors}
+                            >
+                              <Grid item xs={4}>
+                                <Typography
+                                  noWrap={true}
+                                  className={classes.visitorHeading}
+                                >
+                                  {person.name}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Typography
+                                  noWrap={true}
+                                  className={classes.visitorHeading}
+                                >
+                                  USD {person.price}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={4}>
+                                <Typography
+                                  noWrap={true}
+                                  className={classes.visitorHeading}
+                                >
+                                  {person.art}
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                            <div>
+                              <BorderLinearProgress
+                                variant="determinate"
+                                value={person.progress}
+                              />
+                            </div>
+                          </Grid>
+                        </Grid>
+                      );
+                    })}
+                  </div>
+                </PinCard>
+                <br />
+                <PinCard
+                  heading="Name"
+                  subHeading="ENS Domains Purshased by thhis player"
+                >
+                  <div className={classes.padding}>
                     <Grid
+                      style={{ marginTop: "5px" }}
+                      className={classes.personList}
                       container
-                      justifyContent="space-between"
-                      className={classes.player}
                     >
-                      <Grid item xs={4}>
-                        <Typography className={classes.playerHeading}>
-                          Gold Drip Chain
-                        </Typography>
+                      <Grid style={{ marginRight: "10px" }} item xs={1}>
+                        <img src={coins} alt="person" height="30px" />
                       </Grid>
-                      <Grid item xs={4}>
-                        <Typography className={classes.playerPriceHeading}>
-                          USD 23
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography className={classes.playerHeading}>
-                          5 Paid Wearables
-                        </Typography>
+                      <Grid item xs={10}>
+                        <Grid
+                          container
+                          justifyContent="space-between"
+                          className={classes.player}
+                        >
+                          <Grid item xs={4}>
+                            <Typography
+                              noWrap={true}
+                              className={classes.playerHeading}
+                            >
+                              Gold Drip Chain chain
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography
+                              noWrap={true}
+                              className={classes.playerPriceHeading}
+                            >
+                              USD 23
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={5}>
+                            <Typography
+                              noWrap={true}
+                              className={classes.playerHeading}
+                            >
+                              5 Paid Wearables
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <div>
+                          <BorderLinearProgress
+                            variant="determinate"
+                            value={10}
+                          />
+                        </div>
                       </Grid>
                     </Grid>
-                    <div>
-                      <BorderLinearProgress variant="determinate" value={100} />
-                    </div>
-                  </Grid>
-                </Grid>
-              </PinCard>
-            </Grid>
-            <Grid item xs={12} sm={12} md={5}>
-              <PinCard
-                heading="Visitor Wallet Value"
-                subHeading="Current Wallet Value in USD"
-              >
-                <Typography className={classes.cardCount}>
-                  {visitorData?.price}
-                </Typography>
-              </PinCard>
-              <br />
-              <PinCard
-                heading="Mana Transactions"
-                subHeading="Recent Transactions Value in USD"
-              >
-                <div className={classes.manaSection}>
-                  <div>
-                    <Typography align="left" className={classes.playerHeading}>
-                      Last 30 Days
+                  </div>
+                </PinCard>
+              </Grid>
+              <Grid item xs={12} sm={12} md={5}>
+                <PinCard
+                  heading="Visitor Wallet Value"
+                  subHeading="Current Wallet Value in USD"
+                  minHeight={"200px"}
+                >
+                  <div className={classes.padding}>
+                    <Typography className={classes.cardCount}>
+                      {visitorData?.price}
                     </Typography>
+                  </div>
+                </PinCard>
+                <br />
+                <PinCard
+                  heading="Mana Transactions"
+                  subHeading="Recent Transactions Value in USD"
+                  minHeight={"200px"}
+                >
+                  <div className={classes.manaSection}>
+                    <div>
+                      <Typography
+                        align="left"
+                        className={classes.playerHeading}
+                      >
+                        Last 30 Days
+                      </Typography>
+                      <br />
+                      <div>
+                        <Typography
+                          style={{ lineHeight: 1 }}
+                          className={classes.cardCount}
+                        >
+                          {visitorData?.manaTransaction30Days}
+                        </Typography>
+                        <Typography
+                          align="center"
+                          className={classes.manaTransactions}
+                        >
+                          4 Transactions
+                        </Typography>
+                      </div>
+                    </div>
                     <br />
                     <div>
                       <Typography
-                        style={{ lineHeight: 1 }}
-                        className={classes.cardCount}
+                        align="left"
+                        className={classes.playerHeading}
                       >
-                        {visitorData?.manaTransaction30Days}
+                        Last 90 Days
                       </Typography>
-                      <Typography
-                        align="center"
-                        className={classes.manaTransactions}
-                      >
-                        4 Transactions
-                      </Typography>
+                      <br />
+                      <div>
+                        <Typography
+                          style={{ lineHeight: 1 }}
+                          className={classes.cardCount}
+                        >
+                          {visitorData?.manaTransaction90Days}
+                        </Typography>
+                        <Typography
+                          align="center"
+                          className={classes.manaTransactions}
+                        >
+                          6 Transactions
+                        </Typography>
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <Typography align="left" className={classes.playerHeading}>
-                      Last 90 Days
-                    </Typography>
-                    <br />
-                    <div>
-                      <Typography
-                        style={{ lineHeight: 1 }}
-                        className={classes.cardCount}
-                      >
-                        {visitorData?.manaTransaction90Days}
-                      </Typography>
-                      <Typography
-                        align="center"
-                        className={classes.manaTransactions}
-                      >
-                        6 Transactions
-                      </Typography>
-                    </div>
-                  </div>
-                </div>
-              </PinCard>
+                </PinCard>
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
         </Container>
         <br />
         <DialogActions>

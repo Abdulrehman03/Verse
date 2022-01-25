@@ -5,12 +5,12 @@ export const visitors = [
     price: "9621.28",
     wearables: 39,
     progress: 56,
-    manaTransaction30Days: "536",
-    manaTransaction90Days: "856",
+    manaTransaction30Days: "$536",
+    manaTransaction90Days: "$856",
     players: [
       {
         name: "Golda",
-        price: "6.10",
+        price: "$6.10",
         art: "911",
         progress: 51,
       },

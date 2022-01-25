@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down("md")]: {
         textAlign: "center",
       },
+      [theme.breakpoints.down("sm")]: {
+        textAlign: "start",
+      },
     },
     visitorHeading: {
       fontFamily:
@@ -96,6 +99,13 @@ const useStyles = makeStyles((theme) =>
       border: "1px solid #797979",
       padding: theme.spacing(2),
       margin: theme.spacing(2, 0),
+    },
+    cardCountBig: {
+      fontFamily:
+        "AppleSDGothicNeo-Regular, Apple SD Gothic Neo, sans-serif !important",
+      color: theme.palette.primary.blue,
+      fontSize: "80px !important",
+      textAlign: "center",
     },
     cardCount: {
       fontFamily:
@@ -217,6 +227,9 @@ const useStyles = makeStyles((theme) =>
         textAlign: "center",
       },
     },
+    padding: {
+      padding: theme.spacing(2.5, 0),
+    },
   })
 );
 
@@ -297,8 +310,11 @@ const RealTime = () => {
             <PinCard
               heading="Live Visitor"
               subHeading=" Visitors currently on this plot"
+              minHeight={"200px"}
             >
-              <Typography className={classes.cardCount}>139</Typography>
+              <div className={classes.padding}>
+                <Typography className={classes.cardCountBig}>139</Typography>
+              </div>
             </PinCard>
           </Grid>
           <br />
@@ -307,8 +323,11 @@ const RealTime = () => {
             <PinCard
               heading="Live Visitor Wallet Value"
               subHeading="Total wallet value of all users"
+              minHeight={"200px"}
             >
-              <Typography className={classes.cardCount}>$29,300</Typography>
+              <div className={classes.padding}>
+                <Typography className={classes.cardCount}>$29,300</Typography>
+              </div>
             </PinCard>
           </Grid>
 
@@ -321,9 +340,12 @@ const RealTime = () => {
               subHeading="Realtime"
               heading2="Live Emotes"
               subHeading2="Realtime"
+              minHeight={"200px"}
             >
               <div
+                className={classes.padding}
                 style={{
+                  margin: "20px 0px",
                   display: "flex",
                   justifyContent: "space-between",
                   padding: "0 10px",
@@ -346,51 +368,53 @@ const RealTime = () => {
           <PinCard
             heading="Visitor"
             subHeading="All visitors, their wallet values and wearables."
-            maxHeight={"650px"}
+            maxHeight={"720px"}
           >
-            {visitors.map((visitor, i) => {
-              return (
-                <Grid
-                  className={classes.personList}
-                  key={i}
-                  container
-                  onClick={() => handleClickOpen(visitor)}
-                >
-                  <Grid item xs={1}>
-                    <img src={personImage} alt="person" height="30px" />
-                  </Grid>
-                  <Grid item xs={11}>
-                    <Grid
-                      container
-                      justifyContent="space-between"
-                      className={classes.visitors}
-                    >
-                      <Grid item xs={4}>
-                        <Typography className={classes.visitorHeading}>
-                          {visitor.name}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography className={classes.visitorHeading}>
-                          USD {visitor.price}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography className={classes.visitorHeading}>
-                          {visitor.wearables} Paid Wearables
-                        </Typography>
-                      </Grid>
+            <div className={classes.padding}>
+              {visitors.map((visitor, i) => {
+                return (
+                  <Grid
+                    className={classes.personList}
+                    key={i}
+                    container
+                    onClick={() => handleClickOpen(visitor)}
+                  >
+                    <Grid item xs={1}>
+                      <img src={personImage} alt="person" height="30px" />
                     </Grid>
-                    <div>
-                      <BorderLinearProgress
-                        variant="determinate"
-                        value={visitor.progress}
-                      />
-                    </div>
+                    <Grid item xs={11}>
+                      <Grid
+                        container
+                        justifyContent="space-between"
+                        className={classes.visitors}
+                      >
+                        <Grid item xs={4}>
+                          <Typography className={classes.visitorHeading}>
+                            {visitor.name}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography className={classes.visitorHeading}>
+                            USD {visitor.price}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Typography className={classes.visitorHeading}>
+                            {visitor.wearables} Paid Wearables
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <div>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={visitor.progress}
+                        />
+                      </div>
+                    </Grid>
                   </Grid>
-                </Grid>
-              );
-            })}
+                );
+              })}
+            </div>
           </PinCard>
         </Grid>
         <Grid item xs={12} sm={12} md={3}>
@@ -398,8 +422,9 @@ const RealTime = () => {
             <PinCard
               heading="Visitor Wallet Values (USD)"
               subHeading="Breakdown of visitors wallet values"
+              minHeight={"200px"}
             >
-              <BarChart width={250} height={100} data={dataR} barSize={30}>
+              <BarChart width={250} height={140} data={dataR} barSize={30}>
                 <XAxis
                   dataKey="name"
                   scale="point"
@@ -420,8 +445,9 @@ const RealTime = () => {
             <PinCard
               heading="Visitor Wearable Categories"
               subHeading="Breakdown of wearables by value"
+              minHeight={"200px"}
             >
-              <BarChart width={250} height={100} data={dataR1} barSize={30}>
+              <BarChart width={240} height={140} data={dataR1} barSize={30}>
                 <XAxis
                   dataKey="name"
                   scale="point"
@@ -440,7 +466,11 @@ const RealTime = () => {
           </Grid>
           <br />
           <Grid item xs={12} sm={6} md={12}>
-            <PinCard heading="Visitor Demographics" subHeading="Gender">
+            <PinCard
+              heading="Visitor Demographics"
+              subHeading="Gender"
+              minHeight={"195px"}
+            >
               <Grid
                 container
                 justifyContent={"space-between"}
@@ -455,7 +485,7 @@ const RealTime = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={7}>
-                  <div style={{ width: "150px" }}>
+                  <div style={{ width: "140px" }}>
                     <VictoryPie
                       colorScale={["#a8cde8", "#edb7c2"]}
                       innerRadius={({ datum }) => (datum.y = 80)}
