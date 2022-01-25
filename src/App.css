@@ -1,43 +1,47 @@
 body {
-  background-color: #16325c;
+    background-color: #16325c;
 }
 
 @media only screen and (max-width: 768px) {
-  body {
-    padding-top: 10%;
-  }
+    body {
+        padding-top: 10%;
+    }
 }
 
 ::-webkit-scrollbar {
-  width: 10px !important;
-  height: 5px !important;
+    width: 10px !important;
+    height: 5px !important;
 }
 ::-webkit-scrollbar-button {
-  display: none !important;
+    display: none !important;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  /* box-shadow: inset 0 0 5px grey; */
-  border-radius: 10px;
+    /* box-shadow: inset 0 0 5px grey; */
+    border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #706e6b;
-  border-radius: 10px;
+    background: #706e6b;
+    border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #706e6b;
+    background: #706e6b;
 }
 #email::placeholder {
-  color: #fff9f9;
-  font-size: medium;
+    color: #fff9f9;
+    font-size: medium;
 }
 input,
 input::placeholder {
-  color: #fff9f9;
-  font-size: medium;
+    color: #fff9f9;
+    font-size: medium;
+}
+
+.recharts-cartesian-axis-tick-line .recharts-cartesian-axis-line {
+    display: none !important;
 }
